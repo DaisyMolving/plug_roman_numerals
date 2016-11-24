@@ -16,6 +16,10 @@ defmodule Converter do
     {1, "I"}
   ]
 
+  def convert(number) when number > 3999 or number < 0  do
+    :error
+  end
+
   def convert(0), do: ""
   def convert(number) do
     convert(@arabic_to_roman, number, "")

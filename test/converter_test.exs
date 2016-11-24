@@ -89,4 +89,12 @@ defmodule ConverterTest do
     assert Converter.convert(3999) == "MMMCMXCIX"
   end
 
+  test "a number over 3999 raises an error" do
+    assert Converter.convert(4000) == :error
+  end
+
+  test "a negative number raises an error" do
+    assert Converter.convert(-10) == :error
+  end
+
 end
