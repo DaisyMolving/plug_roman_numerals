@@ -61,4 +61,32 @@ defmodule ConverterTest do
     assert Converter.convert(50) == "L"
   end
 
+  test "90 returns XC" do
+    assert Converter.convert(90) == "XC"
+  end
+
+  test "100 returns C" do
+    assert Converter.convert(100) == "C"
+  end
+
+  test "400 returns CD" do
+    assert Converter.convert(400) == "CD"
+  end
+
+  test "500 returns D" do
+    assert Converter.convert(500) == "D"
+  end
+
+  test "900 returns CM" do
+    assert Converter.convert(900) == "CM"
+  end
+
+  test "1000 returns M" do
+    assert Converter.convert(1000) == "M"
+  end
+
+  test "3999 returns MMMCMXCIX" do
+    assert Converter.convert(3999) == "MMMCMXCIX"
+  end
+
 end
