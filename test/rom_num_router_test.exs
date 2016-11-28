@@ -5,15 +5,7 @@ defmodule RomNumRouterTest do
   @opts RomNumRouter.init([])
 
   test "goes to index page" do
-    conn = conn(:get, "/", TemplateDisplay.template_index)
-    conn = RomNumRouter.call(conn, @opts)
-
-    assert conn.state == :sent
-    assert conn.status == 200
-  end
-
-  test "go to Arabic numbers page" do
-    conn = conn(:post, "/arabic_numbers", "")
+    conn = conn(:get, "/", TemplateDisplay.template_index("hello"))
     conn = RomNumRouter.call(conn, @opts)
 
     assert conn.state == :sent
@@ -30,7 +22,7 @@ defmodule RomNumRouterTest do
   end
 
   test "index page displays eex html template as response body" do
-    conn = conn(:get, "/", TemplateDisplay.template_index)
+    conn = conn(:get, "/", TemplateDisplay.template_index("hello"))
     conn = RomNumRouter.call(conn, @opts)
 
     assert conn.resp_body =~ "Arabic Number"
@@ -50,6 +42,24 @@ defmodule RomNumRouterTest do
 
     assert conn.state == :set
     assert conn.status == 302
+  end
+
+  test "goes to Arabic numbers page and redirects" do
+    conn = conn(:post, "/arabic_numbers", "arabic_number=6")
+    conn = RomNumRouter.call(conn, @opts)
+
+    assert conn.state == :set
+    assert conn.status == 302
+  end
+
+  test "stored cookie is passed to new conn when redirected" do
+    old_conn = conn(:post, "/arabic_numbers", "arabic_number=123")
+    |> RomNumRouter.call(@opts)
+    new_conn = conn(:get, "/", TemplateDisplay.template_index(CookieStore.fetch_value(old_conn)))
+    |> RomNumRouter.call(@opts)
+    conn = recycle_cookies(new_conn, old_conn)
+
+    assert CookieStore.fetch_value(conn) =~ "123"
   end
 
 end

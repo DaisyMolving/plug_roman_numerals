@@ -7,11 +7,14 @@ defmodule RomNumRouter do
 
 
   get "/" do 
-    send_resp(conn, 200, TemplateDisplay.template_index)
+    conn
+    |> send_resp(200, TemplateDisplay.template_index(CookieStore.fetch_value(conn)))
   end
 
   post "/arabic_numbers" do
-    send_resp(conn, 200, "")
+    value = CookieStore.read_arabic_value(conn)
+    CookieStore.store(conn, value)
+    |> redirect(to: "/")
   end
 
   match _ do

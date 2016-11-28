@@ -8,5 +8,7 @@
         <input type="number" name="arabic_number" /></br>
         <input type="submit" value="Convert Number"/>
     </form>
+    <p>The answer is:</p></br></br>
+    <h2><%= roman_numeral %></h2>
   </body>
 </html>
