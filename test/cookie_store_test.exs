@@ -4,6 +4,12 @@ defmodule CookieStoreTest do
 
   @opts RomNumRouter.init([])
 
+  test "reads the arabic value given by form in body" do
+    conn = conn(:post, "/arabic_numbers", "arabic_number=13")
+
+    assert CookieStore.read_arabic_value(conn) == "13"
+  end
+
   test "stores a cookie" do
     conn = conn(:post, "/arabic_numbers", "arabic_number=6")
     |> CookieStore.store("VI")
