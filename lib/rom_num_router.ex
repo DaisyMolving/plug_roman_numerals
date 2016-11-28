@@ -11,11 +11,17 @@ defmodule RomNumRouter do
   end
 
   post "/arabic_numbers" do
-    {:ok, body, _} = read_body(conn)
     send_resp(conn, 200, "")
   end
 
   match _ do
     send_resp(conn, 404, "Sorry, page not found")
+  end
+
+  def redirect(conn, [to: to]) do
+    conn
+    |> put_resp_header("location", to)
+    |> resp(302, "")
+    |> halt
   end
 end

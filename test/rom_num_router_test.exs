@@ -44,4 +44,12 @@ defmodule RomNumRouterTest do
     assert body == "arabic_number=6"
   end
 
+  test "redirects to given location" do
+    conn = conn(:post, "/arabic_numbers", "arabic_number=6")
+    conn = RomNumRouter.redirect(conn, [to: "/"])
+
+    assert conn.state == :set
+    assert conn.status == 302
+  end
+
 end
