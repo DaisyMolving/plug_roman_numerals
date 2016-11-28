@@ -5,14 +5,13 @@ defmodule RomNumRouter do
   plug :match
   plug :dispatch
 
-
   get "/" do 
     conn
     |> send_resp(200, TemplateDisplay.template_index(CookieStore.fetch_value(conn)))
   end
 
   post "/arabic-numbers" do
-    value = CookieStore.read_arabic_value(conn)
+    value = read_arabic_value(conn)
     CookieStore.store(conn, value)
     |> redirect(to: "/")
   end
@@ -27,4 +26,10 @@ defmodule RomNumRouter do
     |> resp(302, "")
     |> halt
   end
+
+  def read_arabic_value(conn) do
+    {:ok, body, _} = Plug.Conn.read_body(conn)
+    Enum.at(Regex.run(~r/\d+/, body), 0)
+  end
+
 end

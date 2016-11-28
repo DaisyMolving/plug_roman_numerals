@@ -62,4 +62,10 @@ defmodule RomNumRouterTest do
     assert CookieStore.fetch_value(conn) =~ "123"
   end
 
+  test "reads the arabic value given by form in body" do
+    conn = conn(:post, "/arabic_numbers", "arabic_number=13")
+
+    assert RomNumRouter.read_arabic_value(conn) == "13"
+  end
+
 end
