@@ -3,7 +3,7 @@
   <body>
     <h1>Roman Numerals Converter</h1>
     <p>Please enter a number between 1-3999: </p>
-    <form action="/arabic_numbers" method="post">
+    <form action="/arabic-numbers" method="post">
         Arabic Number:</br>
         <input type="number" name="arabic_number" /></br>
         <input type="submit" value="Convert Number"/>

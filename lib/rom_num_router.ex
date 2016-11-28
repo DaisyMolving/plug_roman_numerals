@@ -11,7 +11,7 @@ defmodule RomNumRouter do
     |> send_resp(200, TemplateDisplay.template_index(CookieStore.fetch_value(conn)))
   end
 
-  post "/arabic_numbers" do
+  post "/arabic-numbers" do
     value = CookieStore.read_arabic_value(conn)
     CookieStore.store(conn, value)
     |> redirect(to: "/")

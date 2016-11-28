@@ -13,7 +13,7 @@ defmodule RomNumRouterTest do
   end
 
   test "if page not found return 404" do
-    conn = conn(:get, "/weird_request", "Sorry, page not found")
+    conn = conn(:get, "/weird-request", "Sorry, page not found")
     conn = RomNumRouter.call(conn, @opts)
 
     assert conn.state == :sent
@@ -29,7 +29,7 @@ defmodule RomNumRouterTest do
   end
 
   test "input from html form is given in response body" do
-    conn = conn(:post, "/arabic_numbers", "arabic_number=6")
+    conn = conn(:post, "/arabic-numbers", "arabic_number=6")
     conn = RomNumRouter.call(conn, @opts)
     {:ok, body, _} = read_body(conn)
 
@@ -37,7 +37,7 @@ defmodule RomNumRouterTest do
   end
 
   test "redirects to given location" do
-    conn = conn(:post, "/arabic_numbers", "arabic_number=6")
+    conn = conn(:post, "/arabic-numbers", "arabic_number=6")
     conn = RomNumRouter.redirect(conn, [to: "/"])
 
     assert conn.state == :set
@@ -45,7 +45,7 @@ defmodule RomNumRouterTest do
   end
 
   test "goes to Arabic numbers page and redirects" do
-    conn = conn(:post, "/arabic_numbers", "arabic_number=6")
+    conn = conn(:post, "/arabic-numbers", "arabic_number=6")
     conn = RomNumRouter.call(conn, @opts)
 
     assert conn.state == :set
@@ -53,7 +53,7 @@ defmodule RomNumRouterTest do
   end
 
   test "stored cookie is passed to new conn when redirected" do
-    old_conn = conn(:post, "/arabic_numbers", "arabic_number=123")
+    old_conn = conn(:post, "/arabic-numbers", "arabic_number=123")
     |> RomNumRouter.call(@opts)
     new_conn = conn(:get, "/", TemplateDisplay.template_index(CookieStore.fetch_value(old_conn)))
     |> RomNumRouter.call(@opts)
